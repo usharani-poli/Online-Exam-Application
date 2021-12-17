@@ -24,7 +24,10 @@ namespace Online_Exam_Application.Controllers
             parameters.Add("@course_title", course_title);
             IEnumerable<Questions> Questions_List = MasterContext.ReturnList<Questions>
                 ("getQuestionsofCourse", parameters);
-            return View(Questions_List);
+            TempData["QuestionsList"] = Questions_List;
+            TempData["qData"] = Questions_List.First();
+            TempData["a"] = 1;
+            return RedirectToAction("NextQuestion");
         }
 
         [HttpPost]
@@ -65,8 +68,9 @@ namespace Online_Exam_Application.Controllers
 
         public ActionResult NextQuestion()
         {
-            int qNo = 1;
-            ViewBag.questionNo = qNo;
+            //int qNo = 1;
+            ViewBag.questionNo = (int)TempData["a"];
+            TempData["qno"] = ViewBag.questionNo;
             Questions a = (Questions)TempData["qData"];
 
             return View(a);
@@ -75,29 +79,33 @@ namespace Online_Exam_Application.Controllers
         [HttpPost]
         public ActionResult NextQuestion(Questions aaa)
         {
-            if (aaa.Correct_Ans == aaa.SelectedAns && aaa.id != 1)
+            int question_no = (int)TempData["qno"];
+            if (aaa.Correct_Ans == aaa.SelectedAns && question_no != 1)
             {
                 Session["correctAns"] = Convert.ToInt32(Session["correctAns"]) + 1;
             }
-            else if (aaa.Correct_Ans == aaa.SelectedAns && aaa.id == 1)
+            else if (aaa.Correct_Ans == aaa.SelectedAns && question_no == 1)
             {
                 Session["correctAns"] = 1;
             }
 
-            if (aaa.id == 10)
+            List<Questions> Questions_List = TempData["QuestionsList"] as List<Questions>;
+
+            if (question_no == Questions_List.Count)
             {
                 return RedirectToAction("Create", "Result");
 
             }
-            int qId = (int)aaa.id + 1;
-            var parameters = new DynamicParameters();
-            Questions SingleQuestion = MasterContext.ReturnList<Questions>
-                ("getQuestionsofCourse", parameters).SingleOrDefault();
+            //int qId = ViewBag.questionNo + 1;
+            //var parameters = new DynamicParameters();
+            //Questions SingleQuestion = MasterContext.ReturnList<Questions>
+            //    ("getQuestionsofCourse", parameters).SingleOrDefault();
 
 
-            ViewBag.questionNo = qId;
-            TempData["a"] = SingleQuestion.id;
-            TempData["qData"] = SingleQuestion;
+            TempData["qno"] = question_no + 1 ;
+            TempData["a"] = TempData["qno"];
+            //ViewBag.questionNo = TempData["qno"];
+            TempData["qData"] = Questions_List[aaa.id];
             return RedirectToAction("NextQuestion");
 
         }
