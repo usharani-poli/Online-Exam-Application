@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Online_Exam_Application.Models.Courses>
+@{
+    ViewBag.Title = "Available Exams";
+}
+
+<h2>Available Exams</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_Questions)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Course_Title, "DisplayQuestions", new { course_title = item.Course_Title })
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Total_Questions)
+            </td>
+        </tr>
+    }
+</table>
+
+<div >
+    <h2 style="color: #ff0000"> 
+        <u>Note:</u>
+        <span>Clicking on the Course will start the Exam</span>
+    </h2>     
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Online_Exam_Application.Models.Questions>
+@{
+    ViewBag.Title = "DisplayQuestions";
+}
+
+<h2>Questions for the Exam</h2>
+
+@*<script>
+     function myFunction() {
+          var x = document.getElementById("resultDiv");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+     }
+</script>*@
+
+@using (Html.BeginForm())
+{
+
+<div class="form-horizontal">
+
+    @foreach (var item in Model)
+    {
+        @*@index*@
+    @*<dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => item.Question_Name)
+        </dd>
+        <dt>
+            @Html.RadioButtonFor(model => item.SelectedAns, item.Ans1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => item.Ans1)
+        </dd>
+
+        <dt>
+            @Html.RadioButtonFor(model => item.SelectedAns, item.Ans2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => item.Ans2)
+        </dd>
+
+        <dt>
+            @Html.RadioButtonFor(model => item.SelectedAns, item.Ans3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => item.Ans3)
+        </dd>
+
+        <dt>
+            @Html.RadioButtonFor(model => item.SelectedAns, item.Ans4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => item.Ans4)
+        </dd>
+    </dl>*@
+        <br />
+        <input type="text" value="@item.Question_Name" size="200" style="font-weight: bold; border:hidden"/>
+        <br />
+        <input type="radio" value="@item.Ans1" name="@item.Question_Name" />
+        @item.Ans1
+        <br />
+        <input type="radio" value="@item.Ans2" name="@item.Question_Name" />
+        @item.Ans2
+        <br />
+        <input type="radio" value="@item.Ans3" name="@item.Question_Name" />
+        @item.Ans3
+        <br />
+        <input type="radio" value="@item.Ans4" name="@item.Question_Name" />
+        @item.Ans4
+        <br />
+        @*@{index++; }*@
+   
+    }
+        
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit the Answers" class="btn btn-default" />
+                @*<input type="submit" value="Submit the Answers" class="btn btn-default" onclick="myFunction()" />*@
+            </div>
+        </div>
+        @*<br/>
+            <div id="resultDiv">
+                <p>5 out of 8 are correct</p>
+            </div>*@
+    </div>
+}
