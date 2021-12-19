@@ -1,9 +1,16 @@
 ﻿@model IEnumerable<Online_Exam_Application.Models.Courses>
 @{
     ViewBag.Title = "Available Exams";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Available Exams</h2>
+@{
+    if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Add Question", "AddQuestion","Questions")
+    }
+}
 <table class="table">
     <tr>
         <th>
@@ -26,11 +33,11 @@
     }
 </table>
 
-<div >
- 
-        <u>Note:</u>
-        <span>Clicking on the Course title will start the Exam</span>
-         
+<div>
+
+    <u>Note:</u>
+    <span>Clicking on the Course title will start the Exam</span>
+
 </div>
 
 @section Scripts {

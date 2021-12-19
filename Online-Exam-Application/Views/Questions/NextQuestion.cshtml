@@ -1,17 +1,19 @@
 ﻿@model Online_Exam_Application.Models.Questions
 @*@{
-    ViewBag.Title = "NextQuestion";
-}*@
+        ViewBag.Title = "NextQuestion";
+        ViewBag.Title = @ViewBag.score;
+    }*@
 
 <h2>Next Question</h2>
 
 
 @{
-    ViewBag.Title = @ViewBag.score;
+    ViewBag.Title = "Question";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br>
 
-<h1></h1>
+<h1>Please select an answer and click on Next to proceed further</h1>
 
 
 

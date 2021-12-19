@@ -10,6 +10,7 @@ namespace Online_Exam_Application.Controllers
 {
     public class QuestionsController : Controller
     {
+        [Authorize(Roles = "admin,student")]
         // GET: Questions
         public ActionResult Index()
         {
@@ -18,6 +19,7 @@ namespace Online_Exam_Application.Controllers
             return View(courses_List);
         }
 
+        [Authorize(Roles = "admin,student")]
         public ActionResult DisplayQuestions(string course_title)
         {
             var parameters = new DynamicParameters();
@@ -27,6 +29,7 @@ namespace Online_Exam_Application.Controllers
             TempData["QuestionsList"] = Questions_List;
             TempData["qData"] = Questions_List.First();
             TempData["a"] = 1;
+            Session["Total_Questions"] = Questions_List.Count();
             return RedirectToAction("NextQuestion");
         }
 
@@ -37,6 +40,7 @@ namespace Online_Exam_Application.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult AddQuestion()
         {
             return View();
@@ -66,16 +70,16 @@ namespace Online_Exam_Application.Controllers
             return View(question);
         }
 
+        [Authorize(Roles = "admin,student")]
         public ActionResult NextQuestion()
         {
             //int qNo = 1;
             ViewBag.questionNo = (int)TempData["a"];
             TempData["qno"] = ViewBag.questionNo;
             Questions a = (Questions)TempData["qData"];
-
             return View(a);
-
         }
+
         [HttpPost]
         public ActionResult NextQuestion(Questions aaa)
         {
@@ -105,9 +109,8 @@ namespace Online_Exam_Application.Controllers
             TempData["qno"] = question_no + 1 ;
             TempData["a"] = TempData["qno"];
             //ViewBag.questionNo = TempData["qno"];
-            TempData["qData"] = Questions_List[aaa.id];
+            TempData["qData"] = Questions_List[question_no];
             return RedirectToAction("NextQuestion");
-
         }
     }
 }
