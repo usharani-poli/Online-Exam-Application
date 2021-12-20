@@ -37,20 +37,8 @@ namespace Online_Exam_Application.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin,student")]
+        /*[Authorize(Roles = "admin,student")]
         public ActionResult Dashboard()
-        {
-            return View();
-        }
-
-        /*[Authorize(Roles = "admin")]
-        public ActionResult AboutUs()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "student")]
-        public ActionResult ContactUs()
         {
             return View();
         }*/

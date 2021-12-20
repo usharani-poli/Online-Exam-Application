@@ -17,11 +17,6 @@ namespace Online_Exam_Application.Controllers
         [Authorize(Roles = "admin,student")]
         public ActionResult Create()
         {
-            if (Session["correctAns"] == null)
-            {
-                Session["correctAns"] = 0;
-            }
-            
             int score = (int)Session["correctAns"];
             int totalQuestions = (int)Session["Total_Questions"];
             float resultPercentatge = ((float)score /(float)totalQuestions)*100;
@@ -49,8 +44,6 @@ namespace Online_Exam_Application.Controllers
             Session["grade"] = ViewBag.grade;
             Session["quality"] = ViewBag.quality;
 
-            /*ViewBag.candidate_id = 1;
-            ViewBag.exam_id = 1;*/
             return RedirectToAction("ShowResult");
         }
 

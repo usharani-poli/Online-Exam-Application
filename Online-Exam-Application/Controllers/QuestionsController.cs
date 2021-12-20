@@ -30,6 +30,7 @@ namespace Online_Exam_Application.Controllers
             TempData["qData"] = Questions_List.First();
             TempData["a"] = 1;
             Session["Total_Questions"] = Questions_List.Count();
+            Session["correctAns"] = 0;
             return RedirectToAction("NextQuestion");
         }
 
@@ -73,7 +74,6 @@ namespace Online_Exam_Application.Controllers
         [Authorize(Roles = "admin,student")]
         public ActionResult NextQuestion()
         {
-            //int qNo = 1;
             ViewBag.questionNo = (int)TempData["a"];
             TempData["qno"] = ViewBag.questionNo;
             Questions a = (Questions)TempData["qData"];
@@ -84,15 +84,11 @@ namespace Online_Exam_Application.Controllers
         public ActionResult NextQuestion(Questions aaa)
         {
             int question_no = (int)TempData["qno"];
-            if (aaa.Correct_Ans == aaa.SelectedAns && question_no != 1)
+            if (aaa.Correct_Ans == aaa.SelectedAns)
             {
                 Session["correctAns"] = Convert.ToInt32(Session["correctAns"]) + 1;
             }
-            else if (aaa.Correct_Ans == aaa.SelectedAns && question_no == 1)
-            {
-                Session["correctAns"] = 1;
-            }
-
+            
             List<Questions> Questions_List = TempData["QuestionsList"] as List<Questions>;
 
             if (question_no == Questions_List.Count)
@@ -100,15 +96,9 @@ namespace Online_Exam_Application.Controllers
                 return RedirectToAction("Create", "Result");
 
             }
-            //int qId = ViewBag.questionNo + 1;
-            //var parameters = new DynamicParameters();
-            //Questions SingleQuestion = MasterContext.ReturnList<Questions>
-            //    ("getQuestionsofCourse", parameters).SingleOrDefault();
-
-
+            
             TempData["qno"] = question_no + 1 ;
             TempData["a"] = TempData["qno"];
-            //ViewBag.questionNo = TempData["qno"];
             TempData["qData"] = Questions_List[question_no];
             return RedirectToAction("NextQuestion");
         }
