@@ -23,6 +23,13 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Questions", "Index", "Questions")</li>
+                    @{
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Results", "Index", "Result")</li>
+                        }
+                    }                    
                 </ul>
                 <div class="nav navbar-nav navbar-right">
                     @if (Request.IsAuthenticated)
@@ -36,17 +43,6 @@
                     }
                 </div>
             </div>
-            @*<div class="navbar-collapse collapse navbar-right">
-                @if (Request.IsAuthenticated)
-                {
-                    <strong>@Html.Encode(User.Identity.Name)</strong>
-                    @Html.ActionLink("SingOut", "SignOut", "Login")
-                }
-                else
-                {
-                    @Html.ActionLink("Log In", "Login", "Login")
-                }
-            </div>*@
         </div>
     </div>
     <div class="container body-content">

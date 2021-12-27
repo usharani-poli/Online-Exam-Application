@@ -17,13 +17,15 @@
 <div class="form-group">
     @Html.LabelFor(model => model.course_id, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(Model => Model.course_id, new List<SelectListItem> {
+       @* @Html.DropDownListFor(Model => Model.course_id, new List<SelectListItem> {
 
             new SelectListItem{ Text="MVC", Value ="1" },
            new SelectListItem{ Text="ADO.NET", Value = "2" },
            new SelectListItem{ Text=".NET Core", Value ="3" }
 
-  }, "Select Course", new { @class = "form-control" })
+  }, "Select Course", new { @class = "form-control" })*@
+        @Html.DropDownListFor(Model => Model.course_id, (SelectList)ViewBag.Courses,
+            "Select Course", new { @class = "form-control" })
     </div>
 </div>
 

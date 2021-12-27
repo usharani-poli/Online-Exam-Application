@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Online_Exam_Application.Models.Results>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All exam results</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.student_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.course_title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quality)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_Questions)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.correct_ans)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.time_of_exam)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(model => item.student_Name)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.course_title)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.grade)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.quality)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.Total_Questions)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.correct_ans)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.time_of_exam)
+    </td>
+</tr>
+    }
+</table>
+

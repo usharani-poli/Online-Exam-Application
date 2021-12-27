@@ -30,20 +30,23 @@ namespace Online_Exam_Application.Controllers
             TempData["qData"] = Questions_List.First();
             TempData["a"] = 1;
             Session["Total_Questions"] = Questions_List.Count();
+            Session["course_title"] = course_title;
             Session["correctAns"] = 0;
             return RedirectToAction("NextQuestion");
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [ActionName("DisplayQuestions")]
         public ActionResult Validate()
         {
             return RedirectToAction("Index");
-        }
+        }*/
 
         [Authorize(Roles = "admin")]
         public ActionResult AddQuestion()
         {
+            ViewBag.Courses = new SelectList(MasterContext.ReturnList<Courses>("sp_getCourses", null).ToList(),
+                "course_id", "course_title");
             return View();
         }
 

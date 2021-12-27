@@ -7,6 +7,7 @@ namespace Online_Exam_Application.Models
 {
     public class Courses
     {
+        public int Course_id { get; set; }
         public string Course_Title { get; set; }
         public int Total_Questions { get; set; }
     }

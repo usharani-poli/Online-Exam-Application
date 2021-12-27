@@ -7,7 +7,7 @@ namespace Online_Exam_Application.Models
 {
     public class UserDetail
     {
-        public int id { get; set; }
+        public int user_id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
     }

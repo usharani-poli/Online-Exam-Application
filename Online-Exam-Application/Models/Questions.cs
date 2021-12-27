@@ -23,6 +23,7 @@ namespace Online_Exam_Application.Models
         public string Ans4 { get; set; }
         [Required(ErrorMessage = "Please enter which option is correct answer for this question")]
         public string Correct_Ans { get; set; }
+        //[Required(ErrorMessage = "Please select an answer for this question")]
         public string SelectedAns { get; set; }
     }
 }

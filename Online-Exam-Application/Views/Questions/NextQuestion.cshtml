@@ -13,9 +13,75 @@
 }
 <br>
 
-<h1>Please select an answer and click on Next to proceed further</h1>
+<h2>Please select an answer and click on Next to proceed further.</h2>
+<h3>If you don't answer the question before the timer runs out the 
+    question gets expired and you will be redirected to the next question.</h3>
 
+<div id="clockdiv">
+    <h1 style="color: red">
+        <div id="countdown"></div>
+        <div class="minutes" style="float: left"> </div>
+        <p style="float: left">:</p>
+        <div class="seconds"></div>
+    </h1>
+</div>
 
+<script>
+    function getTimeRemaining(endtime) {
+        var t = Date.parse(endtime) - Date.parse(new Date());
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 1);
+        return {
+            'total': t,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
+    function initializeClock(id, endtime) {
+        var clock = document.getElementById(id);
+        var minutesSpan = clock.querySelector('.minutes');
+        var secondsSpan = clock.querySelector('.seconds');
+        function updateClock() {
+            var t = getTimeRemaining(endtime);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+            if (t.total <= 0) {
+                clearInterval(timeinterval);
+            }
+        }
+        updateClock();
+        var timeinterval = setInterval(updateClock, 1000);
+    }
+    var deadline = new Date(Date.parse(new Date()) + 60 * 60 * 1000);
+    initializeClock('clockdiv', deadline);
+    // ...................................
+    @*var _second = 1000;
+    var _minute = _second * 60;
+    var _hour = _minute * 60;
+    var _day = _hour * 24;
+    var timer;*@
+    var end = new Date().getTime() + (60 * _second);
+    //
+    function showRemaining() {
+        var now = new Date();
+        var distance = end - now;
+        if (distance < 0) {
+            clearInterval(timer);
+            //document.getElementById('countdown').innerHTML = 'EXPIRED!';
+            document.getElementById('nextBtn').click();
+            return;
+        }
+        @*var days = Math.floor(distance / _day);
+        var hours = Math.floor((distance % _day) / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+        document.getElementById('countdown').innerHTML = days + 'days ';
+        document.getElementById('countdown').innerHTML += hours + 'hrs ';
+        document.getElementById('countdown').innerHTML += minutes + 'mins ';
+        document.getElementById('countdown').innerHTML += seconds + 'secs';*@
+    }
+    timer = setInterval(showRemaining, 1000);
+</script>
 
 <div>
     @using (Html.BeginForm("NextQuestion", "Questions", FormMethod.Post))
@@ -26,15 +92,9 @@
             <h4> </h4>
             <hr />
             <dl class="dl-horizontal">
-
-
                 <dt>
-
                     @ViewBag.questionNo)
-
-
                 </dt>
-
                 <dd>
                     @Html.DisplayFor(model => model.Question_Name)
                 </dd>
@@ -85,11 +145,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="NEXT" class="btn btn-danger" />
+                <input type="submit" id="nextBtn" value="NEXT" class="btn btn-danger" />
             </div>
         </div>
 
 
     }
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
